@@ -13,7 +13,7 @@ DatasetCreator uses no third party jars and is  therefore free from Log4j issues
 
 ## Downloading DatasetCreator
 
-Download the latest version from [releases](https://github.com/forcedotcom/CRMA-DatasetCreator/releases) and follow the examples below:
+Download the latest version from [releases](https://github.com/forcedotcom/CRMA-Dataset-Creator/releases) and follow the examples below:
 
 ## Running DatasetCreator
 
