@@ -71,7 +71,12 @@ public class RESTHttpClient {
 		 HttpClient client = HttpClient.newHttpClient();
 		
 		 HttpResponse<String> resp=client.send(request,BodyHandlers.ofString());
-		 oauthTokens[0] =  parseAccessToken(resp.body());
+		// logger.fine("Query response : "+resp.body());
+		 if(!parseAccessIsSuccess(resp.body())) {
+			 throw new DatasetCreatorException(resp.body());
+			}
+		 
+		 oauthTokens[0] = parseAccessToken(resp.body());
 		 oauthTokens[1] =parseIntanceUrl(resp.body());
 		 
 	}
@@ -155,6 +160,14 @@ public class RESTHttpClient {
 		 }else return false;
 			 
 	}
+	
+	public static boolean parseAccessIsSuccess(String aBody) {
+		 int posStart= aBody.indexOf("error");
+		 if(posStart>-1) {
+			 return false;
+		 }else return true;
+			 
+	}
 
 	
 	protected boolean isDataPartSuccess() {
@@ -165,12 +178,15 @@ public class RESTHttpClient {
 	
 	public static void createHeader(String aOperation, String aDatasetLabel, 
 			String aDatasetAlias,File aMetadataJson, String aApp ) throws Exception {
-		    
-		   String appId =getAppId(aApp);
+		   
+		   String appId=null;
+		   if (aApp!=null) {
+			   appId=getAppId(aApp);
+		   }
 		   
 		   logger.info("App Folder Id : "+appId);
 		   
-		   HeaderJSON header= new HeaderJSON(aOperation,aDatasetLabel,aDatasetAlias, null);
+		   HeaderJSON header= new HeaderJSON(aOperation,aDatasetLabel,aDatasetAlias, appId);
 		   FileUtils fileUtils = new FileUtils();
 		   header.setMetaJSON(fileUtils.getBase64String(fileUtils.readFile(aMetadataJson)));
 		   	   		   
@@ -247,6 +263,7 @@ public class RESTHttpClient {
 		
 		   //SOQL query
 		
+		logger.fine("App Id Query : "+ END_POINT+API_VERSION+SOQL_URL_STEM +aApp+"'" );
 		   	   		   
 		   HttpRequest request =HttpRequest.newBuilder()
 				   .uri(new URI(getOauthTokens()[1]+END_POINT+API_VERSION+SOQL_URL_STEM +aApp+"'"))
