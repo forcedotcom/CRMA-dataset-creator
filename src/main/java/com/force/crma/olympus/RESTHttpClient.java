@@ -33,7 +33,7 @@ public class RESTHttpClient {
     public static final String OAUTH_2_URL ="https://login.salesforce.com/services/oauth2/token";
     public static final String OAUTH_2_URL_STEM ="/services/oauth2/token";
 	public static final String END_POINT="/services/data/";
-    public static final String API_VERSION="v54.0";
+    public static final String API_VERSION="v56.0";
     public static final String SOBJECTS="/sobjects/";
     public static final String SOQL_URL_STEM ="/query/?q=SELECT+FolderId+FROM+InsightsApplication+WHERE+DeveloperName+='";
     
@@ -176,7 +176,7 @@ public class RESTHttpClient {
 
 
 	
-	public static void createHeader(String aOperation, String aDatasetLabel, 
+	public static void createHeader(String aOperation,String aMode, String aDatasetLabel, 
 			String aDatasetAlias,File aMetadataJson, String aApp ) throws Exception {
 		   
 		   String appId=null;
@@ -186,7 +186,7 @@ public class RESTHttpClient {
 		   
 		   logger.info("App Folder Id : "+appId);
 		   
-		   HeaderJSON header= new HeaderJSON(aOperation,aDatasetLabel,aDatasetAlias, appId);
+		   HeaderJSON header= new HeaderJSON(aOperation,aMode,aDatasetLabel,aDatasetAlias, appId);
 		   FileUtils fileUtils = new FileUtils();
 		   header.setMetaJSON(fileUtils.getBase64String(fileUtils.readFile(aMetadataJson)));
 		   	   		   

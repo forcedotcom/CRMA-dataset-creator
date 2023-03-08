@@ -11,6 +11,7 @@ public class HeaderJSON {
 	protected static final String EXT_DATA_OBJECT="InsightsExternalData";
 	protected static final String FIELD_FORMAT="\"Format\"";
 	protected static final String FIELD_OPERATION="\"Operation\"";
+	protected static final String FIELD_MODE="\"Mode\"";
 	protected static final String FIELD_EDGEMART_LABEL="\"EdgemartLabel\"";
 	protected static final String FIELD_EDGEMART_ALIAS="\"EdgemartAlias\"";
 	protected static final String FIELD_EDGEMART_CONTAINER="\"EdgemartContainer\"";
@@ -18,12 +19,14 @@ public class HeaderJSON {
 	protected static final String FIELD_ACTION="\"Action\"";
 	protected static final String FIELD_DATA_FILE ="DataFile";
 	protected static final String[] OPERATIONS_VALUE= {"Append","Overwrite","Upsert"};
+	protected static final String[] MODE_VALUE = {"Incremental"};
 	protected static final char LF = '\n';
 	
 
 		
 	
 	private String operation="Overwrite";
+	private String mode=null;
 	private String datasetLabel=null;
 	private String datasetAlias=null;
 	private String metajson =null;
@@ -34,8 +37,9 @@ public class HeaderJSON {
 	
 	
 
-	public HeaderJSON(String aOperation, String aDatasetLabel,String aDatasetAlias, String aApp) {
+	public HeaderJSON(String aOperation,String aMode, String aDatasetLabel,String aDatasetAlias, String aApp) {
 		if(!StringUtils.isBlank(aOperation)) operation =aOperation;
+		mode=aMode;
 		datasetAlias=aDatasetAlias;
 		datasetLabel=aDatasetLabel;
 		app=aApp;
@@ -66,6 +70,9 @@ public class HeaderJSON {
 			requestBody.append(FIELD_EDGEMART_CONTAINER).append(" : \"").append(app).append("\",").append(LF);
 		}
 		requestBody.append(FIELD_OPERATION).append(" : \"").append(operation).append("\",").append(LF);
+		if(!StringUtils.isBlank(mode)) {
+			requestBody.append(FIELD_MODE).append(" : \"").append(mode).append("\",").append(LF);
+		}
 		requestBody.append(FIELD_METADATA_JSON).append(" : \"").append(metajson).append("\",").append(LF);
 		requestBody.append(FIELD_ACTION).append(" : \"").append(action).append("\"").append(LF);
 		requestBody.append("}").append(LF);

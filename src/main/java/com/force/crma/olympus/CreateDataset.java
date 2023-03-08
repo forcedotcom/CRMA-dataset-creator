@@ -130,6 +130,16 @@ public class CreateDataset {
 	            }
 	          }
 	        }
+	        else if (args[(i - 1)].equalsIgnoreCase("--mode"))
+	        {
+	          if (args[i] != null) {
+	            if (args[i].equalsIgnoreCase("Incremental"))
+	            {
+	              params.mode = args[i];
+	            }
+	          }
+	        }
+	         
 	      }
 	    }
 	 //   params.schemaFile = (params.inputFile.substring(0, params.inputFile.length() - 4) + "_schema.json");
@@ -142,11 +152,11 @@ public class CreateDataset {
 	    try
 	    {
 	      checkArguments(schemaFile, dataFile, params.datasetAlias, params.username, 
-	    		  params.password,params.cSecret,params.cKey, params.operation);
+	    		  params.password,params.cSecret,params.cKey, params.operation,params.mode);
 	      
 	      DatasetCreator.uploadData(schemaFile, dataFile, params.datasetAlias,params.datasetLabel,
 	    		  params.username, params.password,params.cSecret,params.cKey,
-	    		  params.endpoint, params.operation, params.app );
+	    		  params.endpoint, params.operation, params.app, params.mode );
 	    }
 	    catch (Exception e)
 	    {
@@ -159,7 +169,7 @@ public class CreateDataset {
 	
 		//Simple validation method for the arguments
 		private static void checkArguments(File aMetadataJson, File aDataFile,String aDatasetAlias,String aUserName, String aPassword, 
-				String aCSecret, String aCKey,String aOperation) throws DatasetCreatorException{
+				String aCSecret, String aCKey,String aOperation, String aMode) throws DatasetCreatorException{
 			//Validate JSON file
 			if(aMetadataJson==null){
 				throw new DatasetCreatorException("The JSON schema file cannot be null");
@@ -180,6 +190,9 @@ public class CreateDataset {
 			}
 			if(!StringUtils.isBlank(aOperation)&&!StringUtils.arrayContainsValue(HeaderJSON.OPERATIONS_VALUE,aOperation)){
 				throw new DatasetCreatorException("The operation "+aOperation +" is not valid, it must be one of : Append, Overwrite or Upsert");
+			}
+			if(!StringUtils.isBlank(aMode)&&!StringUtils.arrayContainsValue(HeaderJSON.MODE_VALUE,aMode)){
+				throw new DatasetCreatorException("The mode "+aMode +" is not valid, it must be one of : Incremental ");
 			}
 			//Validate data file file
 			if(aDataFile==null){

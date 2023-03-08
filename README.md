@@ -68,6 +68,8 @@ Open a terminal and type in the following command and follow the prompts on the 
 
 --cSecret : the client secret.
 
+--mode : optional to use with beta feature of true append to dataset (only value Incremental is available as of this date). Mode is only applied with the beta feature enabled on the org and with operation Append.
+
 
 
 ## Usage Example 1: Upload a local csv to a dataset in production
@@ -82,5 +84,7 @@ Open a terminal and type in the following command and follow the prompts on the 
 
     java -jar dataset-creator-0.54.jar --inputFile  Complaints.csv --schemaFile  Complaints_schema.json  --operation Overwrite  --u twilson@olympus.crma.com  --p AppassWd --dataset Complaints --label Complaints --app SharedApp   --endpoint https://test.salesforce.com --cSecret 844383111F0F755E420B23E1EA0B4AEDB --cKey 3MVG9F0F755E420B23E1EA9BC10B4AEDBmV9T7ZMnfw4C
 	
+## Usage Example 4: Append a local csv to a dataset in incremental mode (Beta)
 
+	    java -jar dataset-creator-0.54.jar --inputFile  Complaints.csv --schemaFile  Complaints_schema.json  --operation Append --mode Incremental --u twilson@olympus.crma.com  --p AppassWd --dataset Complaints --label Complaints --app SharedApp   --endpoint https://login.salesforce.com --cSecret 844383111F0F755E420B23E1EA0B4AEDB --cKey 3MVG9F0F755E420B23E1EA9BC10B4AEDBmV9T7ZMnfw4C
 

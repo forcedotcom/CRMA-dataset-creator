@@ -14,6 +14,7 @@ public class DatasetCreatorParams {
 	  String inputFile = null;
 	  String schemaFile = null;
 	  String operation = null;
+	  String mode=null;
 	  String proxyHost =null;
 	  int proxyPort =0;
 	  String proxyUsername =null;

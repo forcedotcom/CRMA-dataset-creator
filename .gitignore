@@ -1,0 +1,4 @@
+
+*.class
+target/classes/META-INF/maven/com.force.crma.olympus/dataset-creator/pom.properties
+target/classes/META-INF/maven/com.force.crma.olympus/dataset-creator/pom.xml

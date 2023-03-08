@@ -60,12 +60,12 @@ public class DatasetCreator {
 	
 	public static void uploadData(File aMetadataJson, File aDataFile,String aDatasetAlias,String aDatasetLabel,
 			String aUserName, String aPassword, String aCSecret, String aCKey,
-			String aEndpoint,String aOperation, String aApp) throws Exception{
+			String aEndpoint,String aOperation, String aApp, String aMode) throws Exception{
 		
 		
 		RESTHttpClient.setOauthTokens(aUserName, aPassword, aCSecret, aCKey,(aEndpoint));
 	
-		RESTHttpClient.createHeader(aOperation, aDatasetLabel,aDatasetAlias, aMetadataJson, aApp);
+		RESTHttpClient.createHeader(aOperation,aMode, aDatasetLabel,aDatasetAlias, aMetadataJson, aApp);
 		try {
 			addDataParts(aDataFile);
 			RESTHttpClient.updateHeader();
